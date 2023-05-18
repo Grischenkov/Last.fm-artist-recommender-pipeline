@@ -17,6 +17,6 @@ jobs:
           - name: create dir's
             run: mkdir -p data/raw
           - name: install script requirements
-            run: pip install -r src/requirements.txt
+            run: pip install -r requirements.txt
           - name: load data
             run: python src/load_data.py "LastFM-artist-recommender" "data/raw/lastfm_artist_list.csv"
