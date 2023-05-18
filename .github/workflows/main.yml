@@ -8,11 +8,12 @@ jobs:
           - name: checkout repo content
             uses: actions/checkout@v3
           - name: config aws
-            uses: aws-actions/configure-aws-credentials@v1
-            with:
-              aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-              aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-              aws-region: ru-1
+            run: |
+                mkdir -p .aws
+                cd .aws
+                echo -e "[default]\n	region=ru-1" >> config
+                echo -e "[default]\n	aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\n	aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> credentials
+            shell: bash
           - name: create dir's
             run: mkdir -p data/raw
           - name: install script requirements
