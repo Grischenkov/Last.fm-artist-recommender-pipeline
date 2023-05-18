@@ -13,6 +13,8 @@ jobs:
                 cd .aws
                 echo -e "[default]\n	region=ru-1" >> config
                 echo -e "[default]\n	aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\n	aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> credentials
+                pwd
+                ls
             shell: bash
           - name: create dir's
             run: mkdir -p data/raw
