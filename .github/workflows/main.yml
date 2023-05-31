@@ -12,6 +12,7 @@ jobs:
                 mkdir -p ../../../.aws
                 mkdir -p models
                 mkdir -p data
+                pwd
             shell: bash
           - name: config aws
             run: |
@@ -27,6 +28,10 @@ jobs:
         runs-on: ubuntu-latest
         needs: PrepareEnvJob
         steps:
+          - name: create dir's
+            run: |
+                pwd
+            shell: bash
           - name: check data updates
             run: python src/check_for_updates.py "LastFM-artist-recommender"
       
