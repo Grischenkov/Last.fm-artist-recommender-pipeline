@@ -56,37 +56,37 @@ jobs:
         needs: LoadDataJob
         steps:
           - name: train als
-            run: python 
+            run: python src/train.py "LastFM-artist-recommender" "implicit.als.AlternatingLeastSquares(factors=64)"
     EvalAlsJob:
         runs-on: ubuntu-latest
         needs: TrainingAlsJob
         steps:
           - name: eval als
-            run: python 
+            run: python src/eval.py "LastFM-artist-recommender" "implicit.als.AlternatingLeastSquares(factors=64)"
     
     TrainingCosRecJob:
         runs-on: ubuntu-latest
         needs: LoadDataJob
         steps:
           - name: train cos_rec
-            run: python 
+            run: python src/train.py "LastFM-artist-recommender" "implicit.nearest_neighbours.CosineRecommender(K=200)"
     EvalCosRecJob:
         runs-on: ubuntu-latest
         needs: TrainingCosRecJob
         steps:
           - name: eval cos_rec
-            run: python 
+            run: python src/eval.py "LastFM-artist-recommender" "implicit.nearest_neighbours.CosineRecommender(K=200)"
     
     SelectModelJob:
         runs-on: ubuntu-latest
         needs: [EvalAlsJob, EvalCosRecJob]
         steps:
           - name: select best model
-            run: python 
+            run: python src/select_best_model.py "LastFM-artist-recommender"
     
     DeployModelJob:
         runs-on: ubuntu-latest
         needs: SelectModelJob
         steps:
           - name: deploy best model
-            run: python 
+            run: python src/update_server.py
