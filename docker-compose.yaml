@@ -1,0 +1,14 @@
+version: '3'
+services:
+  flask:
+    platform: linux/amd64
+    build: .
+    container_name: lastfm-artists-rec
+    environment:
+      - FLASK_ENV=development
+      - PYTHONUNBUFFERED=True
+    restart: on-failure
+    volumes:
+      - ./server:/server
+    ports:
+      - "8080:8080"

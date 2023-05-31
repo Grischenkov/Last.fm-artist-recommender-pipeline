@@ -2,23 +2,91 @@
 name: Workflow
 on: [workflow_dispatch]
 jobs:
-    LoadDataset:
+    PrepareEnvJob:
         runs-on: ubuntu-latest
         steps:
           - name: checkout repo content
             uses: actions/checkout@v3
-          - name: config aws
+          - name: create dir's
             run: |
                 mkdir -p ../../../.aws
-                cd ../../../.aws
-                echo -e "[default]\n	region=ru-1" >> config
-                echo -e "[default]\n	aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\n	aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> credentials
-                pwd
-                ls
+                mkdir -p models
+                mkdir -p data
             shell: bash
-          - name: create dir's
-            run: mkdir -p data/raw
-          - name: install script requirements
+          - name: config aws
+            run: |
+                echo -e "[default]\n	region=ru-1" >> ../../../.aws/config
+                echo -e "[default]\n	aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\n	aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ../../../.aws/credentials
+            shell: bash
+          - name: install requirements
             run: pip install -r requirements.txt
+          - name: validate storage
+            run: python src/validate_storage.py "LastFM-artist-recommender"
+    
+    CheckDataUpdatesJob:
+        runs-on: ubuntu-latest
+        needs: PrepareEnvJob
+        steps:
+          - name: check data updates
+            run: python src/check_for_updates.py "LastFM-artist-recommender"
+      
+    ProcessDataJob:
+        runs-on: ubuntu-latest
+        needs: CheckDataUpdatesJob
+        steps:
+          - name: process data
+            run: python src/process_data.py "LastFM-artist-recommender"
+    
+    UploadDataJob:
+        runs-on: ubuntu-latest
+        needs: ProcessDataJob
+        steps:
+          - name: upload data
+            run: python src/upload_processed_data.py "LastFM-artist-recommender"
+    
+    LoadDataJob:
+        runs-on: ubuntu-latest
+        needs: UploadDataJob
+        steps:
           - name: load data
-            run: python src/load_data.py "LastFM-artist-recommender" "data/raw/lastfm_artist_list.csv"
+            run: python src/load_data.py "LastFM-artist-recommender"
+    
+    TrainingAlsJob:
+        runs-on: ubuntu-latest
+        needs: LoadDataJob
+        steps:
+          - name: train als
+            run: python 
+    EvalAlsJob:
+        runs-on: ubuntu-latest
+        needs: TrainingAlsJob
+        steps:
+          - name: eval als
+            run: python 
+    
+    TrainingCosRecJob:
+        runs-on: ubuntu-latest
+        needs: LoadDataJob
+        steps:
+          - name: train cos_rec
+            run: python 
+    EvalCosRecJob:
+        runs-on: ubuntu-latest
+        needs: TrainingCosRecJob
+        steps:
+          - name: eval cos_rec
+            run: python 
+    
+    SelectModelJob:
+        runs-on: ubuntu-latest
+        needs: [EvalAlsJob, EvalCosRecJob]
+        steps:
+          - name: select best model
+            run: python 
+    
+    DeployModelJob:
+        runs-on: ubuntu-latest
+        needs: SelectModelJob
+        steps:
+          - name: deploy best model
+            run: python 
