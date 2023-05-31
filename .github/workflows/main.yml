@@ -12,7 +12,7 @@ jobs:
                 mkdir -p ../../../.aws
                 mkdir -p models
                 mkdir -p data
-                ls 
+                ls src/
             shell: bash
           - name: config aws
             run: |
