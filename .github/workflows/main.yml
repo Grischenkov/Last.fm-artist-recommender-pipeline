@@ -12,7 +12,6 @@ jobs:
                 mkdir -p ../../../.aws
                 mkdir -p models
                 mkdir -p data
-                ls src/
             shell: bash
           - name: config aws
             run: |
@@ -28,6 +27,8 @@ jobs:
         runs-on: ubuntu-latest
         needs: PrepareEnvJob
         steps:
+          - name: checkout repo content
+            uses: actions/checkout@v3
           - name: check data updates
             run: python src/check_for_updates.py "LastFM-artist-recommender"
       
@@ -35,6 +36,8 @@ jobs:
         runs-on: ubuntu-latest
         needs: CheckDataUpdatesJob
         steps:
+          - name: checkout repo content
+            uses: actions/checkout@v3
           - name: process data
             run: python src/process_data.py "LastFM-artist-recommender"
     
@@ -42,6 +45,8 @@ jobs:
         runs-on: ubuntu-latest
         needs: ProcessDataJob
         steps:
+          - name: checkout repo content
+            uses: actions/checkout@v3
           - name: upload data
             run: python src/upload_processed_data.py "LastFM-artist-recommender"
     
@@ -49,6 +54,8 @@ jobs:
         runs-on: ubuntu-latest
         needs: UploadDataJob
         steps:
+          - name: checkout repo content
+            uses: actions/checkout@v3
           - name: load data
             run: python src/load_data.py "LastFM-artist-recommender"
     
@@ -56,12 +63,16 @@ jobs:
         runs-on: ubuntu-latest
         needs: LoadDataJob
         steps:
+          - name: checkout repo content
+            uses: actions/checkout@v3
           - name: train als
             run: python src/train.py "LastFM-artist-recommender" "implicit.als.AlternatingLeastSquares(factors=64)"
     EvalAlsJob:
         runs-on: ubuntu-latest
         needs: TrainingAlsJob
         steps:
+          - name: checkout repo content
+            uses: actions/checkout@v3
           - name: eval als
             run: python src/eval.py "LastFM-artist-recommender" "implicit.als.AlternatingLeastSquares(factors=64)"
     
@@ -69,12 +80,16 @@ jobs:
         runs-on: ubuntu-latest
         needs: LoadDataJob
         steps:
+          - name: checkout repo content
+            uses: actions/checkout@v3
           - name: train cos_rec
             run: python src/train.py "LastFM-artist-recommender" "implicit.nearest_neighbours.CosineRecommender(K=200)"
     EvalCosRecJob:
         runs-on: ubuntu-latest
         needs: TrainingCosRecJob
         steps:
+          - name: checkout repo content
+            uses: actions/checkout@v3
           - name: eval cos_rec
             run: python src/eval.py "LastFM-artist-recommender" "implicit.nearest_neighbours.CosineRecommender(K=200)"
     
@@ -82,6 +97,8 @@ jobs:
         runs-on: ubuntu-latest
         needs: [EvalAlsJob, EvalCosRecJob]
         steps:
+          - name: checkout repo content
+            uses: actions/checkout@v3
           - name: select best model
             run: python src/select_best_model.py "LastFM-artist-recommender"
     
@@ -89,5 +106,7 @@ jobs:
         runs-on: ubuntu-latest
         needs: SelectModelJob
         steps:
+          - name: checkout repo content
+            uses: actions/checkout@v3
           - name: deploy best model
             run: python src/update_server.py
