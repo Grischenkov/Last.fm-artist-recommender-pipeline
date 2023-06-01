@@ -22,20 +22,17 @@ def train(bucket, name):
     model = eval(name)
     model.fit(pickle.load(open('data/actual/scrobbles_sparse_normalized.pkl', 'rb')))
 
-    id = get_max_id(models) + 1
     now = datetime.now().strftime('%m.%d.%Y_%H:%M:%S')
-    name = f"{name}_{id}"
 
-    pickle.dump(model, open(f"models/{name}.pkl", 'wb'))
-    upload_file(bucket, f"models/{name}.pkl", f"models/{name}.pkl")
+    pickle.dump(model, open(f"models/{name}_{now}.pkl", 'wb'))
+    upload_file(bucket, "models/{name}_{now}.pkl", "models/{name}_{now}.pkl")
 
     models['models'].append({
-        f"{name}":{
-            "id":id,
+            "name":f"{name}_{now}",
             "score":0,
             "date":now
         }
-    })
+    )
     set_json(models, bucket, 'models.json')
     
     config['IsActual'] = False
