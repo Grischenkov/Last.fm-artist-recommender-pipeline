@@ -22,7 +22,7 @@ def evaluate(bucket, name):
     pickle.dump(get_pickle(bucket, f"data/{config['LastModified']}/scrobbles.pkl"), open('data/actual/scrobbles.pkl', 'wb'))
     validation = pickle.load(open('data/actual/scrobbles.pkl', 'rb'))
 
-    model = pickle.load(get_pickle(bucket, f"models/{models['models'][len(models['models'])-1]['name']}.pkl")['Body'])
+    model = pickle.load(get_pickle(bucket, f"models/{models['models'][len(models['models'])-1]['name']}.pkl"))
     
     scores = []
     users = 0
