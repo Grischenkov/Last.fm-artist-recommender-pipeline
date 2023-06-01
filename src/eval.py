@@ -22,7 +22,7 @@ def evaluate(bucket, name):
     pickle.dump(get_pickle(bucket, f"data/{config['LastModified']}/scrobbles.pkl"), open('data/actual/scrobbles.pkl', 'wb'))
     validation = pickle.load(open('data/actual/scrobbles.pkl', 'rb'))
 
-    model = pickle.load(get_pickle(bucket, f"models/{models['models'][len(models['models']-1)]['name']}.pkl")['Body'])
+    model = pickle.load(get_pickle(bucket, f"models/{models['models'][len(models['models'])-1]['name']}.pkl")['Body'])
     
     scores = []
     users = 0
@@ -36,7 +36,7 @@ def evaluate(bucket, name):
         users += 1
     score = mean_precision(scores, users)
 
-    models['models'][len(models['models']-1)]['score'] = score
+    models['models'][len(models['models'])-1]['score'] = score
     set_json(models, bucket, 'models.json')
     
 if __name__ == "__main__":
