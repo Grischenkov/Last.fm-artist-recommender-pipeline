@@ -26,7 +26,7 @@ def train(bucket, name):
     now = datetime.now().strftime('%m.%d.%Y_%H:%M:%S')
 
     pickle.dump(model, open(f"models/{name}_{now}.pkl", 'wb'))
-    upload_file(bucket, "models/{name}_{now}.pkl", "models/{name}_{now}.pkl")
+    upload_file(bucket, f"models/{name}_{now}.pkl", f"models/{name}_{now}.pkl")
 
     models['models'].append({
             "name":f"{name}_{now}",
