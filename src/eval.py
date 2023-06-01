@@ -21,11 +21,8 @@ def evaluate(bucket, name):
     os.makedirs(f"data/actual/", exist_ok=True)
     pickle.dump(get_pickle(bucket, f"data/{config['LastModified']}/scrobbles.pkl"), open('data/actual/scrobbles.pkl', 'wb'))
     validation = pickle.load(open('data/actual/scrobbles.pkl', 'rb'))
-    
-    id = get_max_id(models)
-    name = f"{name}_{id}"
 
-    model = pickle.load(get_pickle(bucket, f"models/{name}.pkl")['Body'])
+    model = pickle.load(get_pickle(bucket, f"models/{models['models'][len(models['models']-1)]['name']}.pkl")['Body'])
     
     scores = []
     users = 0
@@ -39,8 +36,8 @@ def evaluate(bucket, name):
         users += 1
     score = mean_precision(scores, users)
 
-    models['models']['name']['score'] = score
+    models['models'][len(models['models']-1)]['score'] = score
     set_json(models, bucket, 'models.json')
-
+    
 if __name__ == "__main__":
     evaluate(sys.argv[1], sys.argv[2])
