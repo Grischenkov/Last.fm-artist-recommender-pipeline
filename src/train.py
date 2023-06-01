@@ -8,8 +8,9 @@ from utils import get_json, set_json, get_pickle, upload_file
 def get_max_id(models):
     id = 0
     for model in models['models']:
-        if model['id'] > id:
-            id = model['id']
+        for i in model:
+            if i['id'] > id:
+                id = model['id']
     return id
 def train(bucket, name):
     config = get_json(bucket, 'config.json')
