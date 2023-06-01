@@ -8,7 +8,7 @@ def validate_storage(bucket):
         config = {
             "LastModified": None, 
             "ActualModel": None, 
-            "ActualScore": None, 
+            "ActualScore": 0, 
             "IsActual": False
         }
         set_json(config, bucket, 'config.json')
