@@ -8,8 +8,8 @@ def select_best_model(bucket):
     best_model = config['ActualModel']
     
     for i in range(len(models['models'])):
-        if t['models'][i]['date'] > config['LastModified']:
-            if t['models'][i]['score'] > best_score:
+        if models['models'][i]['date'] > config['LastModified']:
+            if models['models'][i]['score'] > best_score:
                 best_score = models['models'][i]['score']
                 best_model = models['models'][i]['id']
     
