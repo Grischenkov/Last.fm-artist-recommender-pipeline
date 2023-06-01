@@ -7,8 +7,9 @@ from utils import get_json, set_json, precision, mean_precision, get_pickle
 def get_max_id(models):
     id = 0
     for model in models['models']:
-        if model['id'] > id:
-            id = model['id']
+        for i in model:
+            if i['id'] > id:
+                id = model['id']
     return id
 def get_k_similar(model, target, k):
     indices, distances = model.similar_items(target-1, N=5, filter_items=[target-1])
