@@ -11,7 +11,7 @@ def select_best_model(bucket):
         if models['models'][i]['date'] > config['LastModified']:
             if models['models'][i]['score'] > best_score:
                 best_score = models['models'][i]['score']
-                best_model = models['models'][i]['id']
+                best_model = models['models'][i]['name']
     
     
     config['ActualModel'] = best_model
