@@ -4,13 +4,13 @@ from utils import get_json, set_json
 def select_best_model(bucket):
     config = get_json(bucket, 'config.json')
     models = get_json(bucket, 'models.json')
-    best_score = 0
-    best_model = ''
+    best_score = config['ActualScore']
+    best_model = config['ActualModel']
     for model in models['models']:
         if model['date'] > config['LastModified']:
             if model['score'] > best_score:
                 best_score = model['score']
-                best_model = model['name']
+                best_model = model['id']
     config['ActualModel'] = best_model
     config['ActualScore'] = best_score
     config['IsActual'] = True
