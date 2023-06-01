@@ -1,15 +1,31 @@
+import os
 import sys
 import pickle
-import datetime
-from utils import get_json, set_json, precision, mean_precision, upload_file
+from utils import get_json, set_json, precision, mean_precision, get_pickle
 
+
+def get_max_id(models):
+    id = 0
+    for model in models['models']:
+        if model['id'] > id:
+            id = model['id']
+    return id
 def get_k_similar(model, target, k):
     indices, distances = model.similar_items(target-1, N=5, filter_items=[target-1])
     return [x+1 for x in indices]
 def evaluate(bucket, name):
-    validation = pickle.load(open('data/actual/scrobbles.pkl', 'rb'))
-    model = pickle.load(open(f"models/{name}.pkl", 'rb'))
+    config = get_json(bucket, 'config.json')
     models = get_json(bucket, 'models.json')
+
+    os.makedirs(f"data/actual/", exist_ok=True)
+    pickle.dump(get_pickle(bucket, f"data/{config['LastModified']}/scrobbles.pkl"), open('data/actual/scrobbles.pkl', 'wb'))
+    validation = pickle.load(open('data/actual/scrobbles.pkl', 'rb'))
+    
+    id = get_max_id(models)
+    name = f"{name}_{id}"
+
+    model = pickle.load(get_pickle(bucket, f"models/{name}.pkl")['Body'])
+    
     scores = []
     users = 0
     for user in validation:
@@ -21,13 +37,8 @@ def evaluate(bucket, name):
         scores.append(precision(validation[user], predictions))
         users += 1
     score = mean_precision(scores, users)
-    now = datetime.now().strftime('%m.%d.%Y_%H:%M:%S')
-    models['models'].append({
-        "name":name,
-        "score":score,
-        "date":now
-    })
-    upload_file(bucket, f"models/{name}.pkl", f"models/{name}.pkl")
+
+    models['models']['name']['score'] = score
     set_json(models, bucket, 'models.json')
 
 if __name__ == "__main__":
