@@ -6,11 +6,14 @@ def select_best_model(bucket):
     models = get_json(bucket, 'models.json')
     best_score = config['ActualScore']
     best_model = config['ActualModel']
-    for model in models['models']:
-        if model['date'] > config['LastModified']:
-            if model['score'] > best_score:
-                best_score = model['score']
-                best_model = model['id']
+    
+    for i in range(len(models['models'])):
+        if t['models'][i]['date'] > config['LastModified']:
+            if t['models'][i]['score'] > best_score:
+                best_score = models['models'][i]['score']
+                best_model = models['models'][i]['id']
+    
+    
     config['ActualModel'] = best_model
     config['ActualScore'] = best_score
     config['IsActual'] = True
