@@ -17,6 +17,7 @@ def train(bucket, name):
     models = get_json(bucket, 'models.json')
     
     os.makedirs(f"data/actual/", exist_ok=True)
+    os.makedirs(f"models/", exist_ok=True)
     pickle.dump(get_pickle(bucket, f"data/{config['LastModified']}/scrobbles_sparse_normalized.pkl"), open('data/actual/scrobbles_sparse_normalized.pkl', 'wb'))
     
     model = eval(name)
