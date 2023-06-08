@@ -53,11 +53,11 @@
 
 ## Deploy diagram
 
- ![Deploy diagram](img/deploy_diagram.png?raw=true "Deploy diagram")
+ ![Deploy diagram](deploy_diagram.png?raw=true "Deploy diagram")
 
 ## Workflow diagram
 
- ![Workflow diagram](img/workflow_diagram.png?raw=true "Workflow diagram")
+ ![Workflow diagram](workflow_diagram.png?raw=true "Workflow diagram")
 
 ## Ссылки
 
