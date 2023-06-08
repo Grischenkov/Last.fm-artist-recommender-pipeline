@@ -29,7 +29,7 @@ def validate_storage(bucket):
         os.makedirs('data/raw/', exist_ok=True)
         kaggle.api.dataset_download_files('pcbreviglieri/lastfm-music-artist-scrobbles', path='data/raw/', unzip=True)
         upload_file(bucket, 'data/raw/lastfm_user_scrobbles.csv', 'data/raw/lastfm_user_scrobbles.csv')
-        upload_file(bucket, 'data/raw/lastfm_artists_list.csv', 'data/raw/lastfm_artist_list.csv')
+        upload_file(bucket, 'data/raw/lastfm_artist_list.csv', 'data/raw/lastfm_artist_list.csv')
 
 if __name__ == "__main__":
     validate_storage(sys.argv[1])
