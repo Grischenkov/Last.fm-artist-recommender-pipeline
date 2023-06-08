@@ -7,14 +7,9 @@ jobs:
         steps:
           - name: checkout repo content
             uses: actions/checkout@v3
-          - name: create dir's
-            run: |
-                mkdir -p ../../../.aws
-                mkdir -p models
-                mkdir -p data
-            shell: bash
           - name: config aws
             run: |
+                mkdir -p ../../../.aws
                 echo -e "[default]\n	region=ru-1" >> ../../../.aws/config
                 echo -e "[default]\n	aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\n	aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ../../../.aws/credentials
             shell: bash
@@ -29,14 +24,9 @@ jobs:
         steps:
           - name: checkout repo content
             uses: actions/checkout@v3
-          - name: create dir's
-            run: |
-                mkdir -p ../../../.aws
-                mkdir -p models
-                mkdir -p data
-            shell: bash
           - name: config aws
             run: |
+                mkdir -p ../../../.aws
                 echo -e "[default]\n	region=ru-1" >> ../../../.aws/config
                 echo -e "[default]\n	aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\n	aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ../../../.aws/credentials
             shell: bash
@@ -51,14 +41,9 @@ jobs:
         steps:
           - name: checkout repo content
             uses: actions/checkout@v3
-          - name: create dir's
-            run: |
-                mkdir -p ../../../.aws
-                mkdir -p models
-                mkdir -p data
-            shell: bash
           - name: config aws
             run: |
+                mkdir -p ../../../.aws
                 echo -e "[default]\n	region=ru-1" >> ../../../.aws/config
                 echo -e "[default]\n	aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\n	aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ../../../.aws/credentials
             shell: bash
@@ -73,14 +58,9 @@ jobs:
         steps:
           - name: checkout repo content
             uses: actions/checkout@v3
-          - name: create dir's
-            run: |
-                mkdir -p ../../../.aws
-                mkdir -p models
-                mkdir -p data
-            shell: bash
           - name: config aws
             run: |
+                mkdir -p ../../../.aws
                 echo -e "[default]\n	region=ru-1" >> ../../../.aws/config
                 echo -e "[default]\n	aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\n	aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ../../../.aws/credentials
             shell: bash
@@ -94,14 +74,9 @@ jobs:
         steps:
           - name: checkout repo content
             uses: actions/checkout@v3
-          - name: create dir's
-            run: |
-                mkdir -p ../../../.aws
-                mkdir -p models
-                mkdir -p data
-            shell: bash
           - name: config aws
             run: |
+                mkdir -p ../../../.aws
                 echo -e "[default]\n	region=ru-1" >> ../../../.aws/config
                 echo -e "[default]\n	aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\n	aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ../../../.aws/credentials
             shell: bash
@@ -116,14 +91,9 @@ jobs:
         steps:
           - name: checkout repo content
             uses: actions/checkout@v3
-          - name: create dir's
-            run: |
-                mkdir -p ../../../.aws
-                mkdir -p models
-                mkdir -p data
-            shell: bash
           - name: config aws
             run: |
+                mkdir -p ../../../.aws
                 echo -e "[default]\n	region=ru-1" >> ../../../.aws/config
                 echo -e "[default]\n	aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\n	aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ../../../.aws/credentials
             shell: bash
@@ -137,14 +107,9 @@ jobs:
         steps:
           - name: checkout repo content
             uses: actions/checkout@v3
-          - name: create dir's
-            run: |
-                mkdir -p ../../../.aws
-                mkdir -p models
-                mkdir -p data
-            shell: bash
           - name: config aws
             run: |
+                mkdir -p ../../../.aws
                 echo -e "[default]\n	region=ru-1" >> ../../../.aws/config
                 echo -e "[default]\n	aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\n	aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ../../../.aws/credentials
             shell: bash
@@ -159,14 +124,9 @@ jobs:
         steps:
           - name: checkout repo content
             uses: actions/checkout@v3
-          - name: create dir's
-            run: |
-                mkdir -p ../../../.aws
-                mkdir -p models
-                mkdir -p data
-            shell: bash
           - name: config aws
             run: |
+                mkdir -p ../../../.aws
                 echo -e "[default]\n	region=ru-1" >> ../../../.aws/config
                 echo -e "[default]\n	aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\n	aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ../../../.aws/credentials
             shell: bash
@@ -181,17 +141,6 @@ jobs:
         steps:
           - name: checkout repo content
             uses: actions/checkout@v3
-          - name: create dir's
-            run: |
-                mkdir -p ../../../.aws
-                mkdir -p models
-                mkdir -p data
-            shell: bash
-          - name: config aws
-            run: |
-                echo -e "[default]\n	region=ru-1" >> ../../../.aws/config
-                echo -e "[default]\n	aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}\n	aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ../../../.aws/credentials
-            shell: bash
           - name: install requirements
             run: pip install -r requirements.txt
           - name: deploy best model
