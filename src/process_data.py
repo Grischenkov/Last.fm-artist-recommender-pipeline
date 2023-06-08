@@ -15,18 +15,13 @@ def process_scrobbles(config, bucket):
     scrobbles_sparse_normalized = normalize(scrobbles_sparse, norm='l2', axis=1)
     pickle.dump(scrobbles.groupby('user_id')['artist_id'].apply(list).to_dict(), open(f"data/{config['LastModified']}/scrobbles.pkl", 'wb'))
     pickle.dump(scrobbles_sparse_normalized, open(f"data/{config['LastModified']}/scrobbles_sparse_normalized.pkl", 'wb'))
-def upload_scrobbles(config, bucket):
     upload_file(bucket, f"data/{config['LastModified']}/scrobbles.pkl", f"data/{config['LastModified']}/scrobbles.pkl")
-    os.remove(f"data/{config['LastModified']}/scrobbles.pkl")
     upload_file(bucket, f"data/{config['LastModified']}/scrobbles_sparse_normalized.pkl", f"data/{config['LastModified']}/scrobbles_sparse_normalized.pkl")
-    os.remove(f"data/{config['LastModified']}/scrobbles_sparse_normalized.pkl")
 def process_data(bucket):
     config = get_json(bucket, 'config.json')
     if config['IsActual'] == False:
         os.makedirs(f"data/{config['LastModified']}/", exist_ok=True)
         process_scrobbles(config, bucket)
-        upload_scrobbles(config, bucket)
-        os.rmdir(f"data/{config['LastModified']}")
 
 if __name__ == "__main__":
     process_data(sys.argv[1])
