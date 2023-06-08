@@ -24,12 +24,12 @@ def validate_storage(bucket):
         set_json(models, bucket, 'models.json')
     try:
         scrobbles = get_csv(bucket, 'data/raw/lastfm_user_scrobbles.csv')
-        artists = get_csv(bucket, 'data/raw/lastfm_artists_list.csv')
+        artists = get_csv(bucket, 'data/raw/lastfm_artist_list.csv')
     except:
         os.makedirs('data/raw/', exist_ok=True)
         kaggle.api.dataset_download_files('pcbreviglieri/lastfm-music-artist-scrobbles', path='data/raw/', unzip=True)
         upload_file(bucket, 'data/raw/lastfm_user_scrobbles.csv', 'data/raw/lastfm_user_scrobbles.csv')
-        upload_file(bucket, 'data/raw/lastfm_artists_list.csv', 'data/raw/lastfm_artists_list.csv')
+        upload_file(bucket, 'data/raw/lastfm_artists_list.csv', 'data/raw/lastfm_artist_list.csv')
 
 if __name__ == "__main__":
     validate_storage(sys.argv[1])
