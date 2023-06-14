@@ -4,7 +4,7 @@ import pickle
 from utils import get_json, set_json, precision, mean_precision, get_pickle
 
 def get_k_similar(model, target, k):
-    indices, distances = model.similar_items(target-1, N=5, filter_items=[target-1])
+    indices, distances = model.similar_items(target-1, N=1, filter_items=[target-1])
     return [x+1 for x in indices]
 def evaluate(bucket, name):
     config = get_json(bucket, 'config.json')
